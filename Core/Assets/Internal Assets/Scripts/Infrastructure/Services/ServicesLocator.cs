@@ -1,18 +1,24 @@
 using System.ComponentModel.Design;
 using UnityEngine;
+using Zenject;
 
-public class Services
+public class ServicesLocator
 {
     private ServiceContainer _serviceContainer;
+    private DiContainer diContainer;
 
-    public Services()
+    public ServicesLocator(DiContainer diContainer)
     {
+        this.diContainer = diContainer;
         _serviceContainer = new ServiceContainer();
     }
 
-    public void RegisterService<T>(IService service)
+    public void RegisterService<T>()
     {
+        var service = diContainer.Resolve<T>();
         _serviceContainer.AddService(typeof(T), service);
+        
+        Debug.Log("Service (" + typeof(T).Name + ") successfully registered!");
     }
 
     public void UnregisterService<T>()
@@ -30,6 +36,7 @@ public class Services
 
         return (T) _serviceContainer.GetService(typeof(T));
     }
+
     private bool ServiceExists<T>()
     {
         return _serviceContainer.GetService(typeof(T)) != null;

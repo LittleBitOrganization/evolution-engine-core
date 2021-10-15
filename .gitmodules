@@ -1,0 +1,3 @@
+[submodule "Core/Assets/Submodules/ModuleSave"]
+	path = Core/Assets/Submodules/ModuleSave
+	url = https://bitbucket.org/little-bit-games/evolution-engine-save

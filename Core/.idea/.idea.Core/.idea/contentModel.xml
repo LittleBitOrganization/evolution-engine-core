@@ -7,8 +7,13 @@
         <e p="Internal Assets" t="Include">
           <e p="Scripts" t="Include">
             <e p="Infrastructure" t="Include">
-              <e p="IService.cs" t="Include" />
-              <e p="Services.cs" t="Include" />
+              <e p="Installers" t="Include">
+                <e p="ServicesInstaller.cs" t="Include" />
+              </e>
+              <e p="Services" t="Include">
+                <e p="IService.cs" t="Include" />
+                <e p="ServicesLocator.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
@@ -931,6 +936,22 @@
             </e>
             <e p="Version.txt" t="Include" />
             <e p="zenject.asmdef" t="Include" />
+          </e>
+        </e>
+        <e p="Submodules" t="Include">
+          <e p="ModuleSave" t="Include">
+            <e p="Assets" t="Include">
+              <e p="Save Module" t="Include">
+                <e p="ISaver.cs" t="Include" />
+                <e p="ISaveService.cs" t="Include" />
+                <e p="JsonSaver.cs" t="Include" />
+                <e p="SaveService.cs" t="Include" />
+              </e>
+            </e>
+            <e p="packages" t="Include">
+              <e p="manifest.json" t="Include" />
+              <e p="packages-lock.json" t="Include" />
+            </e>
           </e>
         </e>
       </e>
