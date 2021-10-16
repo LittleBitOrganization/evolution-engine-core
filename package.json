@@ -1,0 +1,10 @@
+{
+  "name": "com.littlebitgames.garden.coremodule",
+  "displayName": "Core Module",
+  "version": "0.1.0-preview.1",
+  "unity": "2021.1",
+  "unityRelease": "6f1",
+  "description": "This module provides you with a Garden Evolution Core Module",
+  "category": "Module",
+  "type":"module"
+}
