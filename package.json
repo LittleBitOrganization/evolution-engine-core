@@ -6,10 +6,5 @@
   "unityRelease": "6f1",
   "description": "This module provides you with a Garden Evolution Core Module",
   "category": "Module",
-  "type":"module",
-  "repository": {
-    "url": "git@bitbucket.org:little-bit-games/evolution-engine-core.git",
-    "type": "git",
-    "revision": "f836497"
-  },
+  "type":"module"
 }
