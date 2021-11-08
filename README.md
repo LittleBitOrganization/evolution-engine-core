@@ -1,6 +1,6 @@
 # Введение
 
-Модуль ядра - главный модуль. Позволяет работать с другими модулями, и содержит в себе интерфейсы для работы с сервисами, классы для работы с данными, некоторые вспомогающие ассеты.
+Модуль ядра - главный модуль. Позволяет работать с другими модулями, и содержит в себе интерфейсы для работы с некоторыми сервисами, классы для работы с данными, некоторые вспомогающие ассеты.
 
 ## Зависимости и требования:
 * Unity version: 2021.1.6f1 и выше
@@ -44,6 +44,32 @@ public class ObjectData : Data
 }
     
 ```
+
+Для сервиса работы с данными есть интерфейс IDataStorageService.
+
+
+```C#
+public interface IDataStorageService : IService
+{
+    public delegate void GenericCallback<T>(T item);
+    
+    //Возвращает Data с T типом по ключу.  
+    public T GetData<T>(string key) where T : Data, new();
+    
+    //Устанавливает Data с T типом по ключу
+    public void SetData<T>(string key, T data) where T : Data;
+    
+    //Устанавливает подписку на данные определённого типа по ключу. При вызове SetData срабатывает CallBack
+    public void AddUpdateDataListener<T>(object handler,string key, GenericCallback<T> onUpdateData);
+
+    //Удаляет подписку на данные
+    public void RemoveUpdateDataListener<T>(object handler, string key,  GenericCallback<T> onUpdateData);
+    
+    //Удаляет все подписки, которые были созданы с объекта handler
+    public void RemoveAllUpdateDataListenersOnObject(object handler);
+}
+```
+ 
 
 ## Services
 
