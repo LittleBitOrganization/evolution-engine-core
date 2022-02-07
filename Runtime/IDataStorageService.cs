@@ -12,5 +12,6 @@ namespace LittleBit.Modules.CoreModule
         public void AddUpdateDataListener<T>(object handler, string key, GenericCallback<T> onUpdateData);
         public void RemoveUpdateDataListener<T>(object handler, string key, GenericCallback<T> onUpdateData);
         public void RemoveAllUpdateDataListenersOnObject(object handler);
+        StorageData<T> CreateDataWrapper<T>(object handler, string key) where T : Data, new();
     }
 }
