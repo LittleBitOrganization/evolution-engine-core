@@ -7,4 +7,10 @@ namespace LittleBit.Modules.CoreModule
 
         public void ClearData(string key);
     }
+    
+    public enum SaveMode
+    {
+        Save,
+        NotSave,
+    }
 }
