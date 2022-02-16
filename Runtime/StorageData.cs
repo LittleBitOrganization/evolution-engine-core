@@ -3,21 +3,18 @@ using System.ComponentModel;
 
 namespace LittleBit.Modules.CoreModule
 {
-    public class StorageData<T> where T : Data, INotifyPropertyChanged, new()
+    public class StorageData<T> where T : Data, new()
     {
         private readonly IDataStorageService dataStorageService;
         private readonly string key;
         
         private readonly object handler;
         
-        private readonly PropertyChangedEventHandler propertyChangedEventHandler;
-        
         private T value;
 
         public T Value
         {
             get { return value; }
-            set { this.value = value; }
         }
 
         public StorageData(object handler, IDataStorageService dataStorageService, string key)
@@ -27,10 +24,6 @@ namespace LittleBit.Modules.CoreModule
             this.dataStorageService = dataStorageService;
 
             Update();
-
-            propertyChangedEventHandler = (sender, args) => { dataStorageService.SetData(key, value); };
-
-            value.PropertyChanged += propertyChangedEventHandler;
         }
 
         public void Update()
@@ -47,16 +40,14 @@ namespace LittleBit.Modules.CoreModule
         {
             dataStorageService.RemoveUpdateDataListener(handler, key, onUpdateData);
         }
-
-        public void Dispose()
-        {
-            dataStorageService.RemoveAllUpdateDataListenersOnObject(handler);
-            value.PropertyChanged -= propertyChangedEventHandler;
-        }
-
         public void RemoveAllListeners()
         {
             dataStorageService.RemoveAllUpdateDataListenersOnObject(handler);
+        }
+
+        public void Save()
+        {
+            dataStorageService.SetData(key, value);
         }
     }
 }
