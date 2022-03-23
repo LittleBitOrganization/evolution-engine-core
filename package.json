@@ -5,6 +5,9 @@
   "unity": "2021.1",
   "unityRelease": "6f1",
   "description": "This module provides you with  Evolution Core Module",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.0"
+  },
   "category": "Module",
   "author": {
     "name": "LittleBitGames"
