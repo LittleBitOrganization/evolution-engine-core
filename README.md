@@ -1,9 +1,3 @@
-# Импорт
-```JSON
-"dependencies": {
-	"com.littlebitgames.coremodule": "https://github.com/LittleBitOrganization/evolution-engine-core.git"
-}
-```
 # Введение
 
 Модуль ядра - главный модуль. Позволяет работать с другими модулями, и содержит в себе интерфейсы для работы с некоторыми сервисами, классы для работы с данными, некоторые вспомогающие ассеты.
@@ -11,6 +5,13 @@
 ## Зависимости и требования:
 * Unity version: 2021.1.6f1 и выше
 * Api compatibility level: .Net 4.x
+
+## Импорт
+```JSON
+"dependencies": {
+	"com.littlebitgames.coremodule": "https://github.com/LittleBitOrganization/evolution-engine-core.git"
+}
+```
 
 
 ## Данные
