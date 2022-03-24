@@ -1,3 +1,9 @@
+# Импорт
+```JSON
+"dependencies": {
+	"com.littlebitgames.coremodule": "https://github.com/LittleBitOrganization/evolution-engine-core.git"
+}
+```
 # Введение
 
 com.littlebitgames.coremodule  
