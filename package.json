@@ -1,12 +1,10 @@
 {
   "name": "com.littlebitgames.coremodule",
   "displayName": "Core Module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "unity": "2021.1",
   "unityRelease": "6f1",
   "description": "This module provides you with  Evolution Core Module",
-  "dependencies": { 
-  },
   "category": "Module",
   "author": {
     "name": "LittleBitGames"
