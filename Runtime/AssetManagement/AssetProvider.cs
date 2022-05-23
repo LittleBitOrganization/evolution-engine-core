@@ -11,6 +11,7 @@ namespace LittleBit.Modules.CoreModule.AssetManagement
     {
         private Dictionary<Type, Dictionary<string, ArrayList>> _cashedAssets;
 
+        [Preserve]
         public AssetProvider()
         {
             _cashedAssets = new Dictionary<Type, Dictionary<string, ArrayList>>();
