@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.Scripting;
 namespace LittleBit.Modules.CoreModule.Tools
 {
     public class FirstPlayChecker
@@ -10,6 +10,12 @@ namespace LittleBit.Modules.CoreModule.Tools
 
         private bool _isInit = false;
 
+        [Preserve]
+        public FirstPlayChecker()
+        {
+            
+        }
+        
         private void Init()
         {
             _isInit = true;
