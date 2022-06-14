@@ -1,9 +1,7 @@
 {
     "name": "LittleBitGames.Core",
     "rootNamespace": "",
-    "references": [
-        ""
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,9 +1,7 @@
 {
     "name": "LittleBitGames.Core.Editor",
     "rootNamespace": "",
-    "references": [
-        "eBitGames.Core"
-    ],
+    "references": [],
     "includePlatforms": [
         "Editor"
     ],
