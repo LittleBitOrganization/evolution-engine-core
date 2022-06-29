@@ -15,6 +15,11 @@ namespace LittleBit.Modules.CoreModule
         public T Value
         {
             get { return value; }
+            set
+            {
+                this.value = value;
+                dataStorageService.SetData(key, value);
+            }
         }
 
         public StorageData(object handler, IDataStorageService dataStorageService, string key)
