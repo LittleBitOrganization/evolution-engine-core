@@ -1,126 +1,126 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace LittleBit.Modules.CoreModule.Tools
+public abstract class SerializableDictionaryBase<TKey, TValue, TValueStorage> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 {
-    [System.Serializable]
-    public class SerializableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ISerializationCallbackReceiver
-    {
-        [SerializeField] private List<TKey> keys = new List<TKey>();
+	[SerializeField]
+	TKey[] m_keys;
+	[SerializeField]
+	TValueStorage[] m_values;
 
-        [SerializeField] private List<TValue> values = new List<TValue>();
+	public SerializableDictionaryBase()
+	{
+	}
 
-        private Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
+	public SerializableDictionaryBase(IDictionary<TKey, TValue> dict) : base(dict.Count)
+	{
+		foreach (var kvp in dict)
+		{
+			this[kvp.Key] = kvp.Value;
+		}
+	}
+	
+	protected SerializableDictionaryBase(SerializationInfo info, StreamingContext context) : base(info,context){}
 
-        public ICollection<TKey> Keys
-        {
-            get { return ((IDictionary<TKey, TValue>) dictionary).Keys; }
-        }
+	protected abstract void SetValue(TValueStorage[] storage, int i, TValue value);
+	protected abstract TValue GetValue(TValueStorage[] storage, int i);
 
-        public ICollection<TValue> Values
-        {
-            get { return ((IDictionary<TKey, TValue>) dictionary).Values; }
-        }
+	public void CopyFrom(IDictionary<TKey, TValue> dict)
+	{
+		this.Clear();
+		foreach (var kvp in dict)
+		{
+			this[kvp.Key] = kvp.Value;
+		}
+	}
 
-        public int Count
-        {
-            get { return ((IDictionary<TKey, TValue>) dictionary).Count; }
-        }
+	public void OnAfterDeserialize()
+	{
+		if(m_keys != null && m_values != null && m_keys.Length == m_values.Length)
+		{
+			this.Clear();
+			int n = m_keys.Length;
+			for(int i = 0; i < n; ++i)
+			{
+				this[m_keys[i]] = GetValue(m_values, i);
+			}
 
-        public bool IsReadOnly
-        {
-            get { return ((IDictionary<TKey, TValue>) dictionary).IsReadOnly; }
-        }
+			m_keys = null;
+			m_values = null;
+		}
 
-        public TValue this[TKey key]
-        {
-            get { return ((IDictionary<TKey, TValue>) dictionary)[key]; }
+	}
 
-            set { ((IDictionary<TKey, TValue>) dictionary)[key] = value; }
-        }
+	public void OnBeforeSerialize()
+	{
+		int n = this.Count;
+		m_keys = new TKey[n];
+		m_values = new TValueStorage[n];
 
-        public void OnBeforeSerialize()
-        {
-            keys.Clear();
-            values.Clear();
-            foreach (KeyValuePair<TKey, TValue> pair in this)
-            {
-                keys.Add(pair.Key);
-                values.Add(pair.Value);
-            }
-        }
+		int i = 0;
+		foreach(var kvp in this)
+		{
+			m_keys[i] = kvp.Key;
+			SetValue(m_values, i, kvp.Value);
+			++i;
+		}
+	}
+}
 
-        public void OnAfterDeserialize()
-        {
-            dictionary = new Dictionary<TKey, TValue>();
+public class SerializableDictionary<TKey, TValue> : SerializableDictionaryBase<TKey, TValue, TValue>
+{
+	public SerializableDictionary()
+	{
+	}
 
-            if (keys.Count != values.Count)
-            {
-                throw new System.Exception(string.Format(
-                    "there are {0} keys and {1} values after deserialization. Make sure that both key and value types are serializable.",
-                    keys.Count, values.Count));
-            }
+	public SerializableDictionary(IDictionary<TKey, TValue> dict) : base(dict)
+	{
+	}
 
-            for (int i = 0; i < keys.Count; i++)
-            {
-                Add(keys[i], values[i]);
-            }
-        }
+	protected SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info,context){}
 
-        public void Add(TKey key, TValue value)
-        {
-            ((IDictionary<TKey, TValue>) dictionary).Add(key, value);
-        }
+	protected override TValue GetValue(TValue[] storage, int i)
+	{
+		return storage[i];
+	}
 
-        public bool ContainsKey(TKey key)
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).ContainsKey(key);
-        }
+	protected override void SetValue(TValue[] storage, int i, TValue value)
+	{
+		storage[i] = value;
+	}
+}
 
-        public bool Remove(TKey key)
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).Remove(key);
-        }
+public static class SerializableDictionary
+{
+	public class Storage<T>
+	{
+		public T data;
+	}
+}
 
-        public bool TryGetValue(TKey key, out TValue value)
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).TryGetValue(key, out value);
-        }
+public class SerializableDictionary<TKey, TValue, TValueStorage> : SerializableDictionaryBase<TKey, TValue, TValueStorage> where TValueStorage : SerializableDictionary.Storage<TValue>, new()
+{
+	public SerializableDictionary()
+	{
+	}
 
-        public void Add(KeyValuePair<TKey, TValue> item)
-        {
-            ((IDictionary<TKey, TValue>) dictionary).Add(item);
-        }
+	public SerializableDictionary(IDictionary<TKey, TValue> dict) : base(dict)
+	{
+	}
 
-        public void Clear()
-        {
-            ((IDictionary<TKey, TValue>) dictionary).Clear();
-        }
+	protected SerializableDictionary(SerializationInfo info, StreamingContext context) : base(info,context){}
 
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).Contains(item);
-        }
+	protected override TValue GetValue(TValueStorage[] storage, int i)
+	{
+		return storage[i].data;
+	}
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            ((IDictionary<TKey, TValue>) dictionary).CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).Remove(item);
-        }
-
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IDictionary<TKey, TValue>) dictionary).GetEnumerator();
-        }
-    }
+	protected override void SetValue(TValueStorage[] storage, int i, TValue value)
+	{
+		storage[i] = new TValueStorage();
+		storage[i].data = value;
+	}
 }
