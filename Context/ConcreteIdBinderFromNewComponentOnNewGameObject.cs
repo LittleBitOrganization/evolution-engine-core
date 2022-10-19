@@ -1,41 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace LittleBit.Context
 {
     public class ConcreteIdBinderFromNewComponentOnNewGameObject<T>
     {
-        private readonly IDiContext _baseContext;
-        internal ConcreteIdBinderFromNewComponentOnNewGameObject(IDiContext baseContext)
+        private readonly IDiContext _diContext;
+        internal ConcreteIdBinderFromNewComponentOnNewGameObject(IDiContext diContext)
         {
-            _baseContext = baseContext;
+            _diContext = diContext;
         }
         
         public void To<TFrom>() where TFrom : MonoBehaviour, T
         {
             string name = typeof(T).Name;
-            _baseContext.BindFromInstance(InstantiateComponent<TFrom>(CreateGameObject(name)));
+            var component =_diContext.InstantiateComponentOnNewGameObject<TFrom>(name, Array.Empty<object>());
+            _diContext.BindFromInstance(component);
         }
-
-        private GameObject CreateGameObject(string name)
-        {
-            var gameObj = new GameObject(name);
-            var parent = _baseContext.ContextTransform;
-            if (parent == null)
-            {
-                gameObj.transform.SetParent(null, false);
-            }
-            else
-            {
-                gameObj.transform.SetParent(parent, false);
-            }
-
-            return gameObj;
-        }
-
-        private TFrom InstantiateComponent<TFrom>(GameObject gameObject) 
-            where TFrom : MonoBehaviour, T
-        {
-            return gameObject.AddComponent<TFrom>();
-        }
+        
     }
 }

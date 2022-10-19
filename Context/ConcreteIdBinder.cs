@@ -2,11 +2,11 @@
 {
     public class ConcreteIdBinder<T>
     {
-        private readonly IDiContext _baseContext;
+        private readonly IDiContext _diContext;
 
-        internal ConcreteIdBinder(IDiContext baseContext)
+        internal ConcreteIdBinder(IDiContext diContext)
         {
-            _baseContext = baseContext;
+            _diContext = diContext;
         }
 
         public void To<TFrom>() where TFrom : T
@@ -16,8 +16,8 @@
 
         private void Bind<TFrom>() where TFrom : T
         {
-            var instantiate = _baseContext.Instantiate<TFrom>();
-            _baseContext.BindFromInstance<T>(instantiate);
+            var instantiate = _diContext.Instantiate<TFrom>();
+            _diContext.BindFromInstance<T>(instantiate);
         }
     }
 }
