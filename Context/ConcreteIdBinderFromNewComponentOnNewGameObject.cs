@@ -6,7 +6,7 @@ namespace LittleBit.Context
     public class ConcreteIdBinderFromNewComponentOnNewGameObject<T>
     {
         private readonly IDiContext _diContext;
-        internal ConcreteIdBinderFromNewComponentOnNewGameObject(IDiContext diContext)
+        public ConcreteIdBinderFromNewComponentOnNewGameObject(IDiContext diContext)
         {
             _diContext = diContext;
         }
