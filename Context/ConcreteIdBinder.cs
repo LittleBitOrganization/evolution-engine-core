@@ -4,7 +4,7 @@
     {
         private readonly IDiContext _diContext;
 
-        internal ConcreteIdBinder(IDiContext diContext)
+        public ConcreteIdBinder(IDiContext diContext)
         {
             _diContext = diContext;
         }
