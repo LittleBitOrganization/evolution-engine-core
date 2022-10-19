@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace LittleBit.Context
 {
-    public abstract class Context
+    public abstract class BaseContext
     {
         public abstract Transform ContextTransform { get; }
         public abstract void BindFromInstance<T>(T service);
@@ -10,7 +10,7 @@ namespace LittleBit.Context
         public abstract void Bind<T>();
         public abstract void Unbind<T>();
         public abstract T Resolve<T>();
-        public abstract Context CreateContext();
+        public abstract BaseContext CreateContext();
         public abstract T Instantiate<T>(params object[] args);
 
         public ConcreteIdBinderFromNewComponentOnNewGameObject<T> BindInterfaceOnNewGameObject<T>()
