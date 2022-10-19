@@ -17,7 +17,7 @@
         private void Bind<TFrom>() where TFrom : T
         {
             var instantiate = _baseContext.Instantiate<TFrom>();
-            _baseContext.BindFromInstance(instantiate);
+            _baseContext.BindFromInstance<T>(instantiate);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace LittleBit.Context
@@ -12,6 +13,8 @@ namespace LittleBit.Context
         public abstract T Resolve<T>();
         public abstract BaseContext CreateContext();
         public abstract T Instantiate<T>(params object[] args);
+
+        public abstract T InstantiateComponentOnNewGameObject<T>(string gameObjectName, IEnumerable<object> extraArgs) where T : Component;
 
         public ConcreteIdBinderFromNewComponentOnNewGameObject<T> BindInterfaceOnNewGameObject<T>()
         {
