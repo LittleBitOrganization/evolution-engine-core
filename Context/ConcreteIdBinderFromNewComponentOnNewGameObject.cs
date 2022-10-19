@@ -4,8 +4,8 @@ namespace LittleBit.Context
 {
     public class ConcreteIdBinderFromNewComponentOnNewGameObject<T>
     {
-        private readonly BaseContext _baseContext;
-        internal ConcreteIdBinderFromNewComponentOnNewGameObject(BaseContext baseContext)
+        private readonly IDiContext _baseContext;
+        internal ConcreteIdBinderFromNewComponentOnNewGameObject(IDiContext baseContext)
         {
             _baseContext = baseContext;
         }

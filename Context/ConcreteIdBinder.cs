@@ -2,9 +2,9 @@
 {
     public class ConcreteIdBinder<T>
     {
-        private readonly BaseContext _baseContext;
+        private readonly IDiContext _baseContext;
 
-        internal ConcreteIdBinder(BaseContext baseContext)
+        internal ConcreteIdBinder(IDiContext baseContext)
         {
             _baseContext = baseContext;
         }
